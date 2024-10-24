@@ -3,7 +3,7 @@ sap.ui.define([
 	], function (Controller) {
 		"use strict";
 
-		return Controller.extend("zjblessons.Lesson5.controller.BaseController", {
+		return Controller.extend("zjblessons.Lesson6.controller.BaseController", {
 		
 			getRouter : function () {
 				return sap.ui.core.UIComponent.getRouterFor(this);

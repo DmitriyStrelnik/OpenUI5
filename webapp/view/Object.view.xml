@@ -1,30 +1,139 @@
-<mvc:View
-	controllerName="zjblessons.Lesson5.controller.Object"
-	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:semantic="sap.f.semantic">
+<mvc:View controllerName="zjblessons.Lesson6.controller.Object" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
 
-	<semantic:SemanticPage
-		id="page"
-		headerPinnable="false"
-		toggleHeaderOnTitleClick="false"
-		busy="{objectView>/busy}"
-		busyIndicatorDelay="{objectView>/delay}">
+    <Page showFooter="false" title="{= ${objectView>/bEditMode} ? '${i18n>editMode}' : ${DocumentNumber}} ">
+        <content>
+            <Bar>
+                <contentLeft>
+                    <Button icon="{i18n>iconNavBack}" type="Transparent" press="onNavBack" />
+                </contentLeft>
+                <contentRight>
+                    <Button type="Emphasized" text="{i18n>edit}" press="onPressEdit" icon="{i18n>iconEdit}"
+                        visible="{= !${objectView>/bEditMode} &amp;&amp; ${objectView>/sSelectedTab}  === 'List'}" />
+                    <Button type="Emphasized" press="onPressSave" text="{i18n>save}" icon="{i18n>iconSave}"
+                        visible="{= ${objectView>/bEditMode}}" />
+                    <Button type="Transparent" press="onPressCancel" text="{i18n>cancel}" icon="{i18n>iconCancel}"
+                        visible="{= ${objectView>/bEditMode}}" />
+                    <Button type="Reject" press="onPressDelete" text="{i18n>delete}" icon="{i18n>iconDelete}"
+                        visible="{= !${objectView>/bEditMode} &amp;&amp; ${Version} === 'D'}" />
+                </contentRight>
+            </Bar>
 
-		<semantic:titleHeading>
-			<Title text="{DocumentNumber}" />
-		</semantic:titleHeading>
-
-		<semantic:headerContent>
-			<ObjectNumber
-			/>
-		</semantic:headerContent>
-
-		<semantic:sendEmailAction>
-			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
-		</semantic:sendEmailAction>
-
-
-	</semantic:SemanticPage>
+            <IconTabBar expandable="false" id="idIconTabBar" headerMode="Inline" selectedKey="{= !${objectView>/sSelectedTab}} select='onIconTabBarSelect'">
+                <items>
+                    <IconTabFilter icon="{i18n>iconList}" key="List" text="{i18n>list}">
+                        <VBox>
+                            <List>
+                                <CustomListItem>
+                                    <VBox class="sapUiContentPadding">
+                                        <Label labelFor="idDocumentNumberList" text="{i18n>documentNumber}" />
+                                        <Input id="idDocumentNumberList" value="{DocumentNumber}"
+                                            editable="{= ${objectView>/bEditMode}}" />
+                                    </VBox>
+                                </CustomListItem>
+                            </List>
+                            
+                            <List>
+                                <CustomListItem>
+                                    <VBox class="sapUiContentPadding">
+                                        <Label labelFor="PlantID" text="{i18n>plantText}" />
+                                        <ComboBox id="idComboBoxList" selectedKey="{PlantID}" width="100%"
+                                            editable="{= ${objectView>/bEditMode}}" >
+                                        </ComboBox>
+                                    </VBox>
+                                </CustomListItem>
+                            </List>
+                            <List>
+                                <CustomListItem>
+                                    <VBox class="sapUiContentPadding">
+                                        <Label labelFor="RegionID" text="{i18n>region}" />
+                                        <Select selectedKey="{RegionID}" editable="{= ${objectView>/bEditMode}}" width="100%"
+                                            items="{path: '/zjblessons_base_Regions' }">
+                                            <items>
+                                                <core:Item key="{RegionID}" text="{RegionText}"  />
+                                            </items>
+                                        </Select>
+                                    </VBox>
+                                </CustomListItem>
+                            </List>            
+                            <List>
+                                <CustomListItem>
+                                    <VBox class="sapUiContentPadding">
+                                        <Label labelFor="idDescriptionList" text="{i18n>description}" />
+                                        <TextArea rows="3" maxLength="256" id="idDescriptionList" value="{Description}" width="100%" editable="{= ${objectView>/bEditMode}}"  />
+                                    </VBox>
+                                </CustomListItem>
+                            </List>
+                        </VBox>
+                    </IconTabFilter>
+                    <IconTabFilter icon="{i18n>iconForm}" key="Form" text="{i18n>form}">
+                        <VBox class="sapUiSmallMargin">
+                            <f:Form id="FormChange354wideDual" editable="true">
+                                <f:title>
+                                    <core:Title text="{i18n>additionalInformation}" />
+                                </f:title>
+                                <f:layout>
+                                    <f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="3" labelSpanM="4"
+                                        labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4"
+                                        emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1"
+                                        singleContainerFullSize="false" />
+                                </f:layout>
+                                <f:formContainers>
+                                    <f:FormContainer title="{i18n>form}">
+                                        <f:formElements>
+                                            <f:FormElement label="{i18n>documentNumber}">
+                                                <Text text="{DocumentNumber}"></Text>
+                                            </f:FormElement>                        
+                                            <f:FormElement label="{i18n>documentDate}">
+                                                <Text text="{
+                                                'path': 'DocumentDate',
+                                                'type': 'sap.ui.model.type.Date',
+                                                'formatOptions': { style: 'short' }}"/>
+                                            </f:FormElement>
+                                            <f:FormElement label="{i18n>plantText}">
+                                                <Text text="{PlantText}"/>
+                                            </f:FormElement>
+                                                <f:FormElement label="{i18n>regionText}">
+                                                <Text text="{RegionText}"/>
+                                            </f:FormElement>
+                                                <f:FormElement label="{i18n>description}">
+                                                <Text text="{Description}"/>
+                                            </f:FormElement>
+                                            <f:FormElement label="{i18n>version}">
+                                                <Text text="{Version}"/>
+                                            </f:FormElement>
+                                        </f:formElements>
+                                    </f:FormContainer>
+                                    <f:FormContainer title="{i18n>details}">
+                                        <f:formElements>
+                                            <f:FormElement label="{i18n>created}">
+                                                <f:fields>
+                                                    <Text text="{Created}" />
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement label="{i18n>createdBy}">
+                                                <f:fields>
+                                                    <Text text="{CreatedBy}" />
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement label="{i18n>modified}">
+                                                <f:fields>
+                                                    <Text text="{ path: 'Modified', formatter: '.formatter.dateMedium' }" />
+                                                </f:fields>
+                                            </f:FormElement>
+                                            <f:FormElement label="{i18n>modifiedByFullName}">
+                                                <f:fields>
+                                                    <Text text="{ModifiedByFullName}" />
+                                                </f:fields>
+                                            </f:FormElement>
+                                        </f:formElements>
+                                    </f:FormContainer>
+                                </f:formContainers>
+                            </f:Form>
+                        </VBox>
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+        </content>
+    </Page>
 
 </mvc:View>

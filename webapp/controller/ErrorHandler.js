@@ -4,7 +4,7 @@ sap.ui.define([
 	], function (UI5Object, MessageBox) {
 		"use strict";
 
-		return UI5Object.extend("zjblessons.Lesson5.controller.ErrorHandler", {
+		return UI5Object.extend("zjblessons.Lesson6.controller.ErrorHandler", {
 
 
 			constructor : function (oComponent) {

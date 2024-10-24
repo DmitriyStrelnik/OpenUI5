@@ -3,11 +3,11 @@ sap.ui.define([
 		"sap/ui/core/UIComponent",
 		"sap/ui/Device",
 		"sap/ui/model/json/JSONModel",
-		"zjblessons/Lesson5/controller/ErrorHandler"
+		"zjblessons/Lesson6/controller/ErrorHandler"
 	], function (UIComponent, Device, JSONModel, ErrorHandler) {
 		"use strict";
 
-		return UIComponent.extend("zjblessons.Lesson5.Component", {
+		return UIComponent.extend("zjblessons.Lesson6.Component", {
 
 			metadata : {
 				manifest: "json"

@@ -1,7 +1,7 @@
 {
 	"_version": "1.9.0",
 	"sap.app": {
-		"id": "zjblessons.Lesson5",
+		"id": "zjblessons.Lesson6",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"title": "{{appTitle}}",
@@ -42,7 +42,7 @@
 	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "zjblessons.Lesson5.view.App",
+			"viewName": "zjblessons.Lesson6.view.App",
 			"type": "XML",
 			"async": true,
 			"id": "app"
@@ -63,7 +63,7 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "zjblessons.Lesson5.i18n.i18n"
+					"bundleName": "zjblessons.Lesson6.i18n.i18n"
 				}
 			},
 			"": {
@@ -79,7 +79,7 @@
 			"config": {
 				"routerClass": "sap.m.routing.Router",
 				"viewType": "XML",
-				"viewPath": "zjblessons.Lesson5.view",
+				"viewPath": "zjblessons.Lesson6.view",
 				"controlId": "app",
 				"controlAggregation": "pages",
 				"bypassed": {

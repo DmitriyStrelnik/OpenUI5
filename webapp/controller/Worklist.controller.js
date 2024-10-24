@@ -1,8 +1,8 @@
 /*global location history */
 sap.ui.define([
-		"zjblessons/Lesson5/controller/BaseController",
+		"zjblessons/Lesson6/controller/BaseController",
 		"sap/ui/model/json/JSONModel",
-		"zjblessons/Lesson5/model/formatter",
+		"zjblessons/Lesson6/model/formatter",
 		"sap/ui/model/Filter",
 		"sap/ui/model/Sorter",
 		"sap/ui/model/FilterOperator",
@@ -10,13 +10,14 @@ sap.ui.define([
 	], function (BaseController, JSONModel, formatter, Filter, Sorter, FilterOperator, Fragment) {
 		"use strict";
 
-		return BaseController.extend("zjblessons.Lesson5.controller.Worklist", {
+		return BaseController.extend("zjblessons.Lesson6.controller.Worklist", {
 
 			formatter: formatter,
  
 			onInit : function () {
 				const oViewModel = new JSONModel({
-					sTotal: 0
+					sTotal: 0,
+					sITBKey: 'All'
 				});
 				this.setModel(oViewModel, "worklistView");
 					
@@ -31,6 +32,7 @@ sap.ui.define([
 				path: '/zjblessons_base_Headers',	
 				sorter: [new Sorter('DocumentDate', true)],
 				template: this._getTableTemplate(),
+				filters: this._getTableFilters(),
 				urlParameters:{
 					$select:'HeaderID,DocumentNumber,DocumentDate,PlantText,RegionText,Description,Created'
 					},
@@ -47,6 +49,12 @@ sap.ui.define([
 					},
 				})
 			},
+			_getTableFilters: function()
+			{
+				const oWorkListModel = this.getModel('worklistView');
+				const sSelectedKey = oWorkListModel.getProperty('/sITBKey');
+				return sSelectedKey === 'All' ? [] : [new Filter('Version', 'EQ', 'D')];
+			},
 			_getTotalItems: function()
 			{
 				this.getModel().read(
@@ -59,6 +67,7 @@ sap.ui.define([
 			_getTableTemplate: function()
 			{
 				const oTemplate= new sap.m.ColumnListItem({
+					highlight: "{= ${Version} ===  'A' ? 'Success' : 'Error'}",
 					type: 'Navigation',
 					navigated: true,
 					cells: [
@@ -81,6 +90,10 @@ sap.ui.define([
 					new sap.m.Text({ text: "{RegionText}" }),
 					new sap.m.Text({ text: "{Description}" }),
 					new sap.m.Text({ text: "{Created}" }),
+					new sap.m.Switch({ switchType: "AcceptReject",
+						state: "{= ${Version} === 'D'}",
+						change: this.ChangeVersion.bind(this)
+					 }),
 					new sap.m.Button({icon: this.getResourceBundle().getText('deleteIcon'),
 						press: this.onPressDeleteItem.bind(this),
 						type:'Transparent'
@@ -88,6 +101,19 @@ sap.ui.define([
 					]	
 				})
 				return oTemplate;
+			},
+			ChangeVersion: function(oEvent){
+				const sVersion = oEvent.getParameter('state') ? 'D': 'A';
+				const sPath= oEvent.getSource().getBindingContext().getPath();
+				this.getModel().setProperty(`${sPath}/Version`, sVersion);
+				this.getModel().submitChanges({
+					success: () => {
+						sap.m.MessageToast.show("Version successfully updated.");
+					},
+					error: () => {
+						sap.m.MessageToast.show("Error updating version.");
+					}
+				});
 			},
 			onPressDeleteItem: function(oEvent){
 				const oBindingContext= oEvent.getSource().getBindingContext();
@@ -97,13 +123,13 @@ sap.ui.define([
 			onRefresh: function() {
 				this._bindTable(true);
 			},
-			onPressCreate() {
+			onPressCreate: function() {
 				this._loadCreateDialog();
 			},
 	
 			_loadCreateDialog : async function () {
 					this._oDialog = await Fragment.load({
-						name: "zjblessons.Lesson5.view.fragment.CreateDialog",
+						name: "zjblessons.Lesson6.view.fragment.CreateDialog",
 						controller: this,
 						id: "CreateNewFields"
 					}).then(oDialog => {
@@ -113,7 +139,7 @@ sap.ui.define([
 				this._oDialog.open();
 			},
 	
-			onDialogBeforeOpen(oEvent) {
+			onDialogBeforeOpen: function(oEvent) {
 				const oDialog = oEvent.getSource();
 				const oParams = {
 							Version: "A",
@@ -157,6 +183,20 @@ sap.ui.define([
 				} else {
 					oTable.getBinding("items").filter([]);
 				}
+			},
+			onItemSelect: function(oEvent){
+				const oSelectedItem = oEvent.getParameter('listItem');
+				const sHeaderID = oSelectedItem.getBindingContext().getProperty('HeaderID');
+				this.getRouter().navTo('object',{
+					objectId: sHeaderID
+				})
+			},
+			
+			OnIconTabHeaderSelect: function(oEvent)
+			{
+				const oSelctedKey= oEvent.getParameter('key');
+				this.getModel('worklistView').setProperty('/sITBKey', oSelctedKey);
+				this._bindTable();
 			}
 
 		});

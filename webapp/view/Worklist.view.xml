@@ -1,8 +1,20 @@
-<mvc:View controllerName="zjblessons.Lesson5.controller.Worklist" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+<mvc:View controllerName="zjblessons.Lesson6.controller.Worklist" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
 
 
 	<Page>
-		<Table id="table" width="auto" noDataText="{worklistView>/tableNoDataText}"
+		<customHeader>
+			<Toolbar>
+                <content>
+                    <IconTabHeader selectedKey="{= ${worklistView>/sITBKey}}" select="OnIconTabHeaderSelect">
+                        <items>
+                            <IconTabFilter key="All" text="{i18n>all}" />
+                            <IconTabFilter key="Deactivated" text="{i18n>deactivated}" />
+                        </items>
+                    </IconTabHeader>
+                </content>
+            </Toolbar>
+		</customHeader>
+		<Table id="table" width="auto" noDataText="{worklistView>/tableNoDataText}" itemPress="onItemSelect"
 			busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="false"
 			growingThreshold="15">
 
@@ -37,6 +49,7 @@
 				<Column id="createdColumn">
 					<Text text="{i18n>tableCreatedColumnTitle}" id="createdColumnTitle" />
 				</Column>
+				<Column width="5%" />
 				<Column width="4%" />
 			</columns>
 
