@@ -1,43 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100%">
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Lesson6</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SAP Fiori 2.0 App Tutorial</title>
 
-	<!-- Bootstrapping UI5 -->
 	<script id="sap-ui-bootstrap"
-			src="https://openui5.hana.ondemand.com/1.129.0/resources/sap-ui-core.js"
-			data-sap-ui-libs="sap.m, sap.f"
-			data-sap-ui-theme="sap_horizon"
-			data-sap-ui-compatVersion="edge"
-			data-sap-ui-preload="async"
-			data-sap-ui-resourceroots='{"zjblessons.Lesson6": "."}'
-			data-sap-ui-frameOptions="trusted">
+		src="https://openui5.hana.ondemand.com/1.120.11/resources/sap-ui-core.js"
+		data-sap-ui-theme="sap_belize"
+		data-sap-ui-resourceroots='{
+			"sap.ui.demo.fiori2": "./"
+		}'
+		data-sap-ui-oninit="module:sap/ui/core/ComponentSupport"
+		data-sap-ui-compatVersion="edge"
+		data-sap-ui-async="true"
+		data-sap-ui-frameOptions="trusted",
+		data-sap-ui-app-cache-buster="./">
 	</script>
-
-	<script>
-		sap.ui.getCore().attachInit(function () {
-			sap.ui.require([
-				"sap/m/Shell",
-				"sap/ui/core/ComponentContainer"
-			], function (Shell, ComponentContainer) {
-				new Shell({
-					app: new ComponentContainer({
-						height: "100%",
-						name: "zjblessons.Lesson6",
-						settings: {
-							id: "Lesson6"
-						}
-					})
-				}).placeAt("content");
-			});
-		});
-	</script>
-
 </head>
 
-<body class="sapUiBody" id="content">
+<body class="sapUiBody sapUiSizeCompact">
+	<div data-sap-ui-component
+		data-name="sap.ui.demo.fiori2"
+		data-height="100%"
+		data-id="container"
+		data-settings='{"id" : "fiori2"}'
+		style="height: 100%">
+	</div>
 </body>
 </html>

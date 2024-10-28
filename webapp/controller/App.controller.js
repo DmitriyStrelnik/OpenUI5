@@ -1,32 +1,42 @@
 sap.ui.define([
-		"zjblessons/Lesson6/controller/BaseController",
-		"sap/ui/model/json/JSONModel"
-	], function (BaseController, JSONModel) {
-		"use strict";
+	"sap/ui/core/mvc/Controller"
+], function (Controller) {
+	"use strict";
 
-		return BaseController.extend("zjblessons.Lesson6.controller.App", {
+	return Controller.extend("sap.ui.demo.fiori2.controller.App", {
+		onInit: function () {
+			this.oOwnerComponent = this.getOwnerComponent();
+			this.oRouter = this.oOwnerComponent.getRouter();
+			this.oRouter.attachRouteMatched(this.onRouteMatched, this);
+		},
+		onRouteMatched: function (oEvent) {
+			var sRouteName = oEvent.getParameter("name"),
+				oArguments = oEvent.getParameter("arguments");
+			this._updateUIElements();
+			this.currentRouteName = sRouteName;
+			this.currentProduct = oArguments.product;
+			this.currentSupplier = oArguments.supplier;
+		},
+		onStateChanged: function (oEvent) {
+			var bIsNavigationArrow = oEvent.getParameter("isNavigationArrow"),
+				sLayout = oEvent.getParameter("layout");
 
-			onInit : function () {
-				var oViewModel,
-					fnSetAppNotBusy,
-					iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
-
-				oViewModel = new JSONModel({
-					busy : true,
-					delay : 0
-				});
-				this.setModel(oViewModel, "appView");
-
-				fnSetAppNotBusy = function() {
-					oViewModel.setProperty("/busy", false);
-					oViewModel.setProperty("/delay", iOriginalBusyDelay);
-				};
-				this.getOwnerComponent().getModel().metadataLoaded().
-				    then(fnSetAppNotBusy);
-				this.getOwnerComponent().getModel().attachMetadataFailed(fnSetAppNotBusy);
-				this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
+			this._updateUIElements();
+			if (bIsNavigationArrow) {
+				this.oRouter.navTo(this.currentRouteName, {layout: sLayout, product: this.currentProduct, supplier: this.currentSupplier}, true);
 			}
-		});
-
-	}
-);
+		},
+		_updateUIElements: function () {
+			var oModel = this.oOwnerComponent.getModel("design"),
+				oUIState;
+			this.oOwnerComponent.getHelper().then(function(oHelper) {
+				oUIState = oHelper.getCurrentUIState();
+				oModel.setData(oUIState);
+			});
+		},
+		onExit: function () {
+			this.oRouter.detachRouteMatched(this.onRouteMatched, this);
+			this.oRouter.detachBeforeRouteMatched(this.onBeforeRouteMatched, this);
+		}
+	});
+});

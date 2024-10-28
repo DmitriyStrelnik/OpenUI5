@@ -1,11 +1,8 @@
 {
-	"_version": "1.9.0",
+	"_version": "1.12.0",
 	"sap.app": {
-		"id": "zjblessons.Lesson6",
+		"id": "sap.ui.demo.fiori2",
 		"type": "application",
-		"i18n": "i18n/i18n.properties",
-		"title": "{{appTitle}}",
-		"description": "{{appDescription}}",
 		"applicationVersion": {
 			"version": "1.0.0"
 		},
@@ -14,58 +11,28 @@
 				"uri": "/jetCloud/apps/zjblessons/jblesson02/v01/01.xsodata/",
 				"type": "OData",
 				"settings": {
-					"odataVersion": "2.0",
-					"localUri": "localService/metadata.xml"
+					"odataVersion": "2.0"
 				}
 			}
-		},
-		"sourceTemplate": {
-			"id": "sap.ui.ui5-template-plugin.1worklist",
-			"version": "1.52.7"
-		}
-	},
-	"sap.ui": {
-		"technology": "UI5",
-		"icons": {
-			"icon": "sap-icon://task",
-			"favIcon": "",
-			"phone": "",
-			"phone@2": "",
-			"tablet": "",
-			"tablet@2": ""
-		},
-		"deviceTypes": {
-			"desktop": true,
-			"tablet": true,
-			"phone": true
 		}
 	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "zjblessons.Lesson6.view.App",
+			"viewName": "sap.ui.demo.fiori2.view.App",
 			"type": "XML",
 			"async": true,
-			"id": "app"
+			"id": "fcl"
 		},
 		"dependencies": {
-			"minUI5Version": "1.42.0",
+			"minUI5Version": "1.98.0",
 			"libs": {
 				"sap.ui.core": {},
 				"sap.m": {},
-				"sap.f": {}
+				"sap.f": {},
+				"sap.uxap": {}
 			}
 		},
-		"contentDensities": {
-			"compact": true,
-			"cozy": true
-		},
 		"models": {
-			"i18n": {
-				"type": "sap.ui.model.resource.ResourceModel",
-				"settings": {
-					"bundleName": "zjblessons.Lesson6.i18n.i18n"
-				}
-			},
 			"": {
 				"dataSource": "mainService",
 				"preload": true,
@@ -73,58 +40,65 @@
 					"defaultBindingMode": "TwoWay",
 					"defaultCountMode": "None"
 				}
-			}
+				},
+				"design": {
+			 	 "type": "sap.ui.model.json.JSONModel",
+			  	"settings": {
+				"layout": "OneColumn"
+			 	 }
+				}
+		},
+		"config": {
+			"fullWidth": true
 		},
 		"routing": {
 			"config": {
-				"routerClass": "sap.m.routing.Router",
+				"routerClass": "sap.f.routing.Router",
+				"type": "View",
 				"viewType": "XML",
-				"viewPath": "zjblessons.Lesson6.view",
-				"controlId": "app",
-				"controlAggregation": "pages",
+				"path": "sap.ui.demo.fiori2.view",
+				"controlId": "flexibleColumnLayout",
+				"transition": "slide",
 				"bypassed": {
-					"target": [
-						"notFound"
-					]
 				},
 				"async": true
 			},
 			"routes": [
 				{
-					"pattern": "",
-					"name": "worklist",
+					"pattern": "page2",
+					"name": "page2",
+					"target": "page2",
+					"layout": "EndColumnFullScreen"
+				},
+				{
+					"pattern": ":layout:",
+					"name": "master",
 					"target": [
-						"worklist"
+						"master",
+						"detail"
 					]
 				},
 				{
-					"pattern": "zjblessons_base_Headers/{objectId}",
-					"name": "object",
+					"pattern": "detail/{product}/{layout}",
+					"name": "detail",
 					"target": [
-						"object"
+						"master",
+						"detail"
 					]
 				}
 			],
 			"targets": {
-				"worklist": {
-					"viewName": "Worklist",
-					"viewId": "worklist",
-					"viewLevel": 1,
-					"title": "{i18n>worklistViewTitle}"
+				"master": {
+					"name": "Master",
+					"controlAggregation": "beginColumnPages"
 				},
-				"object": {
-					"viewName": "Object",
-					"viewId": "object",
-					"viewLevel": 2,
-					"title": "{i18n>objectViewTitle}"
+				"detail": {
+					"name": "Detail",
+					"controlAggregation": "midColumnPages"
 				},
-				"objectNotFound": {
-					"viewName": "ObjectNotFound",
-					"viewId": "objectNotFound"
-				},
-				"notFound": {
-					"viewName": "NotFound",
-					"viewId": "notFound"
+				"page2": {
+					"name": "AboutPage",
+					"controlAggregation": "endColumnPages"
 				}
 			}
 		}

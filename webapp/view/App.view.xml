@@ -1,11 +1,12 @@
 <mvc:View
-	xmlns:mvc="sap.ui.core.mvc"
-	controllerName="zjblessons.Lesson6.controller.App"
-	displayBlock="true"
-	xmlns="sap.m">
-
-	<App id="app"
-		 busy="{appView>/busy}"
-		 busyIndicatorDelay="{appView>/delay}"/>
-
+    controllerName="sap.ui.demo.fiori2.controller.App"
+    displayBlock="true"
+    height="100%"
+    xmlns="sap.f"
+    xmlns:mvc="sap.ui.core.mvc">
+    <FlexibleColumnLayout
+        id="flexibleColumnLayout"
+        stateChange=".onStateChanged"
+        backgroundDesign="Solid"
+        layout="{design>/layout}"/>
 </mvc:View>

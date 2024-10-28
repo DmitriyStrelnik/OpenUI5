@@ -1,48 +1,50 @@
-/* global document */
 sap.ui.define([
-		"sap/ui/core/UIComponent",
-		"sap/ui/Device",
-		"sap/ui/model/json/JSONModel",
-		"zjblessons/Lesson6/controller/ErrorHandler"
-	], function (UIComponent, Device, JSONModel, ErrorHandler) {
-		"use strict";
+    'sap/ui/core/UIComponent',
+    'sap/f/FlexibleColumnLayoutSemanticHelper',
+    'sap/f/library'
+], function(UIComponent, FlexibleColumnLayoutSemanticHelper, fioriLibrary) {
+    'use strict';
 
-		return UIComponent.extend("zjblessons.Lesson6.Component", {
+    return UIComponent.extend('sap.ui.demo.fiori2.Component', {
 
-			metadata : {
-				manifest: "json"
-			},
+        metadata: {
+            manifest: 'json'
+        },
 
-			init : function () {
-				UIComponent.prototype.init.apply(this, arguments);
-				this._oErrorHandler = new ErrorHandler(this);
-				this.setModel(this.createDeviceModel(), "device");
-				this.getRouter().initialize();
-			},
+        init: function () {
+            UIComponent.prototype.init.apply(this, arguments);
+            this.getRootControl().loaded().then(function(oRootControl) {
+                const oRouter = this.getRouter();
+                oRouter.attachBeforeRouteMatched(this._onBeforeRouteMatched, this);
+                oRouter.initialize();
+            }.bind(this));
+        },
 
-			destroy : function () {
-				this._oErrorHandler.destroy();
-				UIComponent.prototype.destroy.apply(this, arguments);
-			},
+        getHelper: function () {
+            return this.getRootControl().loaded().then(function(oRootControl) {
+                var oFCL = oRootControl.byId("flexibleColumnLayout");
+                if (!oFCL) {
+                    return Promise.reject("FlexibleColumnLayout not found.");
+                }
+                var oSettings = {
+                    defaultTwoColumnLayoutType: fioriLibrary.LayoutType.TwoColumnsMidExpanded,
+                    defaultThreeColumnLayoutType: fioriLibrary.LayoutType.ThreeColumnsMidExpanded
+                };
+                return FlexibleColumnLayoutSemanticHelper.getInstanceFor(oFCL, oSettings);
+            });
+        },
 
-			createDeviceModel : function () {
-				const oModel = new JSONModel(Device);
-				return oModel;
-			},
-			getContentDensityClass : function() {
-				if (this._sContentDensityClass === undefined) {
-					if (jQuery(document.body).hasClass("sapUiSizeCozy") || jQuery(document.body).hasClass("sapUiSizeCompact")) {
-						this._sContentDensityClass = "";
-					} else if (!Device.support.touch) { // apply "compact" mode if touch is not supported
-						this._sContentDensityClass = "sapUiSizeCompact";
-					} else {
-						this._sContentDensityClass = "sapUiSizeCozy";
-					}
-				}
-				return this._sContentDensityClass;
-			}
-
-		});
-
-	}
-);
+        _onBeforeRouteMatched: function(oEvent) {
+            var oModel = this.getModel("design"),
+                sLayout = oEvent.getParameters().arguments.layout;
+            if (!sLayout) {
+                this.getHelper().then(function(oHelper) {
+                    var oNextUIState = oHelper.getNextUIState(0);
+                    oModel.setProperty("/layout", oNextUIState.layout);
+                });
+                return;
+            }
+            oModel.setProperty("/layout", sLayout);
+        }
+    });
+});
