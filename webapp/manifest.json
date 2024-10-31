@@ -1,106 +1,75 @@
 {
-	"_version": "1.12.0",
+	"_version": "1.7.0",
 	"sap.app": {
-		"id": "sap.ui.demo.fiori2",
+		"id": "zjblessonsLesson9",
 		"type": "application",
+		"i18n": "i18n/i18n.properties",
 		"applicationVersion": {
 			"version": "1.0.0"
 		},
-		"dataSources": {
-			"mainService": {
-				"uri": "/jetCloud/apps/zjblessons/jblesson02/v01/01.xsodata/",
-				"type": "OData",
-				"settings": {
-					"odataVersion": "2.0"
-				}
-			}
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"sourceTemplate": {
+			"id": "ui5template.basicSAPUI5ApplicationProject",
+			"version": "1.40.12"
 		}
 	},
+
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_belize"
+
+		]
+	},
+
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "sap.ui.demo.fiori2.view.App",
-			"type": "XML",
-			"async": true,
-			"id": "fcl"
+			"viewName": "zjblessonsLesson9.view.View1",
+			"type": "XML"
 		},
 		"dependencies": {
-			"minUI5Version": "1.98.0",
+			"minUI5Version": "1.30.0",
 			"libs": {
 				"sap.ui.core": {},
 				"sap.m": {},
-				"sap.f": {},
+				"sap.ui.layout": {},
+				"sap.ushell": {},
+				"sap.collaboration": {},
+				"sap.ui.comp": {},
 				"sap.uxap": {}
 			}
 		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
 		"models": {
-			"": {
-				"dataSource": "mainService",
-				"preload": true,
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"defaultBindingMode": "TwoWay",
-					"defaultCountMode": "None"
-				}
-				},
-				"design": {
-			 	 "type": "sap.ui.model.json.JSONModel",
-			  	"settings": {
-				"layout": "OneColumn"
-			 	 }
-				}
-		},
-		"config": {
-			"fullWidth": true
-		},
-		"routing": {
-			"config": {
-				"routerClass": "sap.f.routing.Router",
-				"type": "View",
-				"viewType": "XML",
-				"path": "sap.ui.demo.fiori2.view",
-				"controlId": "flexibleColumnLayout",
-				"transition": "slide",
-				"bypassed": {
-				},
-				"async": true
-			},
-			"routes": [
-				{
-					"pattern": "page2",
-					"name": "page2",
-					"target": "page2",
-					"layout": "EndColumnFullScreen"
-				},
-				{
-					"pattern": ":layout:",
-					"name": "master",
-					"target": [
-						"master",
-						"detail"
-					]
-				},
-				{
-					"pattern": "detail/{product}/{layout}",
-					"name": "detail",
-					"target": [
-						"master",
-						"detail"
-					]
-				}
-			],
-			"targets": {
-				"master": {
-					"name": "Master",
-					"controlAggregation": "beginColumnPages"
-				},
-				"detail": {
-					"name": "Detail",
-					"controlAggregation": "midColumnPages"
-				},
-				"page2": {
-					"name": "AboutPage",
-					"controlAggregation": "endColumnPages"
+					"bundleName": "zjblessonsLesson9.i18n.i18n"
 				}
 			}
+		},
+		"resources": {
+			"css": [{
+				"uri": "css/style.css"
+			}]
 		}
 	}
 }
