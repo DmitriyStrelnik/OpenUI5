@@ -1,0 +1,46 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:c="sap.ui.core">
+	<Dialog beforeOpen="onDialogBeforeOpen" id="createEntryDialog" class="sapUiContentPadding" title="{i18n>createItemTitle}">
+		<content>
+			<VBox>
+				<VBox>
+					<Label labelFor="HeaderID" text="{i18n>headerId}" />
+					<Select selectedKey="{HeaderID}" width="100%" editable="{= !${objectView>/bEditMode}}" items="{path: '/zjblessons_base_Headers' }">
+						<items>
+							<c:Item key="{HeaderID}" text="{HeaderID}" />
+						</items>
+					</Select>
+				</VBox>
+				<VBox>
+					<Label labelFor="GroupID" text="{i18n>groupId}" />
+					<Select selectedKey="{GroupID}" width="100%" items="{path: '/zjblessons_base_Groups' }">
+						<items>
+							<c:Item key="{GroupID}" text="{GroupID}" />
+						</items>
+					</Select>
+				</VBox>
+				<VBox>
+					<Label labelFor="MaterialID" text="{i18n>materialId}" />
+					<Select selectedKey="{MaterialID}" width="100%" items="{path: '/zjblessons_base_Materials' }">
+						<items>
+							<c:Item key="{MaterialID}" text="{MaterialID}" />
+						</items>
+					</Select>
+				</VBox>
+				<VBox>
+					<Label text="{i18n>quantity}" labelFor="idQuantity"/>
+					<Input type="Number" maxLength="256" id="idQuantity" value="{Quantity}" width="100%" />
+				</VBox>
+				<VBox>
+					<Label text="{i18n>price}" labelFor="idPrice"/>
+					<Input type="Number" id="idPrice" value="{Price}"/>
+				</VBox>
+			</VBox>
+		</content>
+		<beginButton>
+			<Button type="Accept" text="{= ${objectView>/bEditMode} ? ${i18n>saveEditButton} : ${i18n>createButton}}" press="onSavePress"/>
+		</beginButton>
+		<endButton>
+			<Button type="Reject" text="{i18n>cancelButton}" press="onPressCancel"/>
+		</endButton>
+	</Dialog>
+</c:FragmentDefinition>

@@ -1,0 +1,51 @@
+<mvc:View controllerName="sap.ui.demo.fiori2.controller.Master" xmlns="sap.m" xmlns:f="sap.f" xmlns:mvc="sap.ui.core.mvc">
+	<f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="false">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>productsTotal}" />
+				</f:heading>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:content>
+			<VBox fitContainer="true">
+				<OverflowToolbar class="sapFDynamicPageAlignContent">
+					<ToolbarSpacer />
+					<SearchField search=".onSearch" width="17.5rem" />
+					<OverflowToolbarButton icon="{i18n>addIcon}" text="{i18n>addButton}" type="Transparent" press=".onPressCreate" />
+					<OverflowToolbarButton icon="{i18n>sortIcon}" text="{i18n>sortButton}" type="Transparent" press=".onSort" />
+				</OverflowToolbar>
+				<Table id="itemsTable" inset="false" items="{
+						path: '/zjblessons_base_Items',
+						sorter: {
+							path: 'ItemID'
+						}
+					}" class="sapFDynamicPageAlignContent" width="auto">
+					<columns>
+						<Column width="12em">
+							<Text text="{i18n>itemColumn}" />
+						</Column>
+						<Column hAlign="End">
+							<Text text="{i18n>priceColumn}" />
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem type="Navigation" press=".onListItemPress">
+							<cells>
+								<ObjectIdentifier title="{ItemID}" text="{HeaderID}" />
+								<ObjectNumber number="{Price}" />
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</VBox>
+		</f:content>
+		<f:footer>
+			<OverflowToolbar>
+				<ToolbarSpacer />
+				<Button type="Accept" text="{i18n>acceptButton}" />
+				<Button type="Reject" text="{i18n>rejectButton}" />
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>

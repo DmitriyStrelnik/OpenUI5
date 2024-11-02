@@ -1,0 +1,1 @@
+2nd homework on Master-Detail. Added i18n in addition to the completed tasks

@@ -1,0 +1,122 @@
+<mvc:View controllerName="sap.ui.demo.fiori2.controller.Detail" xmlns="sap.uxap" xmlns:m="sap.m" 
+    xmlns:f="sap.f" xmlns:form="sap.ui.layout.form" xmlns:mvc="sap.ui.core.mvc">
+
+    <ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" busy="{objectView>/busy}"
+        alwaysShowContentHeader="false" preserveHeaderStateOnScroll="false" headerContentPinnable="true"
+        isChildPage="true" upperCaseAnchorBar="false">
+        
+        <headerTitle>
+            <ObjectPageDynamicHeaderTitle>
+                <expandedHeading>
+                    <m:Title text="{ItemID}" wrapping="true" class="sapUiSmallMarginEnd" />
+                </expandedHeading>
+                
+                <navigationActions>
+                    <m:OverflowToolbarButton type="Transparent" icon="sap-icon://full-screen" press=".handleFullScreen"
+                        tooltip="{i18n>enterFullScreenTooltip}"
+                        visible="{= ${/actionButtonsInfo/midColumn/fullScreen} !== null }" />
+                    <m:OverflowToolbarButton type="Transparent" icon="sap-icon://exit-full-screen"
+                        press=".handleExitFullScreen" tooltip="{i18n>exitFullScreenTooltip}"
+                        visible="{= ${/actionButtonsInfo/midColumn/exitFullScreen} !== null }" />
+                    <m:OverflowToolbarButton type="Transparent" icon="sap-icon://decline" press=".handleClose"
+                        tooltip="{i18n>closeColumnTooltip}"
+                        visible="{= ${/actionButtonsInfo/midColumn/closeColumn} !== null }" />
+                </navigationActions>
+
+                <actions>
+                    <m:Button text="{i18n>showCostInBYN}" type="Emphasized" press=".onShowCostInBYN" />
+                    <m:Button text="{i18n>deleteButton}" type="Reject" icon="sap-icon://delete" press="onPressDelete" />
+                    <m:Button text="{i18n>editButton}" type="Emphasized" icon="sap-icon://edit" press="onPressEdit" />
+                </actions>
+            </ObjectPageDynamicHeaderTitle>
+        </headerTitle>
+
+        <headerContent>
+            <m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Stretch">
+                <m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+                    <m:Label text="{i18n>materialIdLabel}" />
+                    <m:Text text="{MaterialID}" />
+                </m:VBox>
+                <m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+                    <m:Label text="{i18n>groupIdLabel}" />
+                    <m:Text text="{GroupID}" />
+                </m:VBox>
+                <m:VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+                    <m:Label text="{i18n>priceLabel}" />
+                    <m:Text text="{Price} EUR" />
+                </m:VBox>
+                <m:VBox justifyContent="Center" class="sapUiMediumMarginEnd">
+                    <m:Label text="{i18n>quantityLabel}" />
+                    <m:Text text="{Quantity}" />
+                </m:VBox>
+            </m:FlexBox>
+        </headerContent>
+        
+        <sections>
+            <ObjectPageSection title="{i18n>headerSection}">
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+                            <form:SimpleForm maxContainerCols="2" editable="false" layout="ResponsiveGridLayout">
+                                <form:content>
+                                    <m:Label text="{i18n>headerIdLabel}" />
+                                    <m:Text text="{HeaderID}" />
+                                    <m:Label text="{i18n>documentNumberLabel}" />
+                                    <m:Text text="{headerModel>/DocumentNumber}" />
+                                    <m:Label text="{i18n>documentDateLabel}" />
+                                    <m:Text text="{headerModel>/DocumentDate}" />
+                                </form:content>
+                            </form:SimpleForm>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+
+            <ObjectPageSection title="{i18n>materialSection}">
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+                            <form:SimpleForm maxContainerCols="2" editable="false" layout="ResponsiveGridLayout">
+                                <form:content>
+                                    <m:Label text="{i18n>materialIdLabel}" />
+                                    <m:Text text="{MaterialID}" />
+                                    <m:Label text="{i18n>materialTextLabel}" />
+                                    <m:Text text="{materialModel>/MaterialText}" />
+                                    <m:Label text="{i18n>materialDescriptionLabel}" />
+                                    <m:Text text="{materialModel>/MaterialDescription}" />
+                                </form:content>
+                            </form:SimpleForm>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+
+            <ObjectPageSection title="{i18n>groupSection}">
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+                            <form:SimpleForm maxContainerCols="2" editable="false" layout="ResponsiveGridLayout">
+                                <form:content>
+                                    <m:Label text="{i18n>groupIdLabel}" />
+                                    <m:Text text="{GroupID}" />
+                                    <m:Label text="{i18n>groupTextLabel}" />
+                                    <m:Text text="{groupModel>/GroupText}" />
+                                    <m:Label text="{i18n>groupDescriptionLabel}" />
+                                    <m:Text text="{groupModel>/GroupDescription}" />
+                                </form:content>
+                            </form:SimpleForm>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+        </sections>
+
+        <footer>
+            <m:OverflowToolbar>
+                <m:ToolbarSpacer />
+                <m:Button type="Accept" text="{i18n>saveButton}" />
+                <m:Button type="Reject" text="{i18n>cancelButton}" />
+            </m:OverflowToolbar>
+        </footer>
+    </ObjectPageLayout>
+</mvc:View>

@@ -1,27 +1,50 @@
 sap.ui.define([
-	"sap/ui/core/UIComponent",
-	"sap/ui/Device",
-	"zjblessonsLesson9/model/models"
-], function(UIComponent, Device, models) {
-	"use strict";
+    'sap/ui/core/UIComponent',
+    'sap/f/FlexibleColumnLayoutSemanticHelper',
+    'sap/f/library'
+], function(UIComponent, FlexibleColumnLayoutSemanticHelper, fioriLibrary) {
+    'use strict';
 
-	return UIComponent.extend("zjblessonsLesson9.Component", {
+    return UIComponent.extend('sap.ui.demo.fiori2.Component', {
 
-		metadata: {
-			manifest: "json"
-		},
+        metadata: {
+            manifest: 'json'
+        },
 
-		/**
-		 * The component is initialized by UI5 automatically during the startup of the app and calls the init method once.
-		 * @public
-		 * @override
-		 */
-		init: function() {
-			// call the base component's init function
-			UIComponent.prototype.init.apply(this, arguments);
+        init: function () {
+            UIComponent.prototype.init.apply(this, arguments);
+            this.getRootControl().loaded().then(function(oRootControl) {
+                const oRouter = this.getRouter();
+                oRouter.attachBeforeRouteMatched(this._onBeforeRouteMatched, this);
+                oRouter.initialize();
+            }.bind(this));
+        },
 
-			// set the device model
-			this.setModel(models.createDeviceModel(), "device");
-		}
-	});
+        getHelper: function () {
+            return this.getRootControl().loaded().then(function(oRootControl) {
+                var oFCL = oRootControl.byId("flexibleColumnLayout");
+                if (!oFCL) {
+                    return Promise.reject("FlexibleColumnLayout not found.");
+                }
+                var oSettings = {
+                    defaultTwoColumnLayoutType: fioriLibrary.LayoutType.TwoColumnsMidExpanded,
+                    defaultThreeColumnLayoutType: fioriLibrary.LayoutType.ThreeColumnsMidExpanded
+                };
+                return FlexibleColumnLayoutSemanticHelper.getInstanceFor(oFCL, oSettings);
+            });
+        },
+
+        _onBeforeRouteMatched: function(oEvent) {
+            var oModel = this.getModel("design"),
+                sLayout = oEvent.getParameters().arguments.layout;
+            if (!sLayout) {
+                this.getHelper().then(function(oHelper) {
+                    var oNextUIState = oHelper.getNextUIState(0);
+                    oModel.setProperty("/layout", oNextUIState.layout);
+                });
+                return;
+            }
+            oModel.setProperty("/layout", sLayout);
+        }
+    });
 });
