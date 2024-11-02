@@ -1,5 +1,5 @@
 <c:FragmentDefinition xmlns="sap.m" xmlns:c="sap.ui.core">
-	<Dialog beforeOpen="onDialogBeforeOpen" id="createEntryDialog" class="sapUiContentPadding" title="{i18n>createItemTitle}">
+	<Dialog beforeOpen="onDialogBeforeOpen" id="createEntryDialog" class="sapUiContentPadding" title="{= ${objectView>/bEditMode} ? ${i18n>editItemTitle} : ${i18n>createItemTitle}}">
 		<content>
 			<VBox>
 				<VBox>

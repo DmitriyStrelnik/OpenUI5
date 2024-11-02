@@ -1,11 +1,8 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator",
 	"sap/ui/model/Sorter",
-	"sap/m/MessageBox",
 	"sap/ui/core/Fragment"
-], function (Controller, Sorter, Fragment) {
+], function (Controller,  Sorter,  Fragment) {
 	"use strict";
 
 	return Controller.extend("sap.ui.demo.fiori2.controller.Master", {
