@@ -1,8 +1,33 @@
 
+.customHeaderBar {
+    height: 60px;
+   
+}
 .agreementText {
     white-space: normal;
     word-wrap: break-word;
     overflow-wrap: break-word;
     display: inline-block;
     hyphens: auto;
+}
+
+.footer-container {
+    background-color: #f8f8f8;
+    padding: 20px;
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+.social-icons .sapMImg {
+    margin-right: 10px;
+}
+.footer-blocklayout {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f8f8f8;
+}
+
+.sapUiBlockCell .sapUiBlockCellContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

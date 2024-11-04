@@ -1,7 +1,8 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-	'sap/ui/model/json/JSONModel'
-], function (Controller, JSONModel) {
+	'sap/ui/model/json/JSONModel',
+	'sap/ui/core/Fragment'
+], function (Controller, JSONModel, Fragment) {
 	"use strict";
 
 	return Controller.extend("zjblessonsLesson9.controller.View1", {
@@ -38,13 +39,13 @@ sap.ui.define([
 				"Enabled": true
 			};
 
-			var oModel = new JSONModel(oData);
+			const oModel = new JSONModel(oData);
 			this.getView().setModel(oModel);
-			var oStateModel = new JSONModel({
+			const oStateModel = new JSONModel({
 				agreementChecked: false
 			});
 			this.getView().setModel(oStateModel, "state");
-			var sPromoCode = this._getPromoCodeFromURL();
+			const sPromoCode = this._getPromoCodeFromURL();
 			if (sPromoCode) {
 				oModel.setProperty("/promocodeValue", sPromoCode);
 				oModel.setProperty("/promoCodeEnabled", false);
@@ -54,6 +55,31 @@ sap.ui.define([
 			}
 
 		},
+		onLogoPress: function (oEvent) {
+			const sPopoverId = this.getView().createId("PopoverID");
+			if (!this._oPopover) {
+				Fragment.load({
+					id: sPopoverId,
+					name: "zjblessonsLesson9.view.fragment.PopoverMenu",
+					controller: this
+				}).then(oPopover => {
+					this._oPopover = oPopover;
+					this.getView().addDependent(this._oPopover);
+					this._oPopover.openBy(oEvent.getSource());
+				});
+			} else {
+				this._oPopover.openBy(oEvent.getSource());
+			}
+
+
+
+		},
+		onPopoverItemPress: function (oEvent) {
+			const sItemText = oEvent.getSource().getTitle();
+			sap.m.MessageToast.show("Вы нажали: " + sItemText);
+			this._oPopover.close();
+		},
+
 		onCancel: function () {
 			this._resetForm();
 		},
@@ -69,8 +95,16 @@ sap.ui.define([
 			oView.byId("citySelect").setValueState(sap.ui.core.ValueState.None);
 		
 			oView.byId("agreementCheckbox").setSelected(false);
-		},	
-
+		},
+		onInstagramIconPress: function () {
+			window.open("https://www.instagram.com", "_blank");
+		},
+		onYouTubeIconPress: function () {
+			window.open("https://www.youtube.com", "_blank");
+		},
+		onTelegramIconPress: function () {
+			window.open("https://telegram.org", "_blank");
+		},
 		onRegister: function () {
 			var oView = this.getView();
 			var bValid = this._validateForm();
@@ -103,43 +137,45 @@ sap.ui.define([
 		_validateForm: function () {
 			var oView = this.getView();
 			var bValid = true;
-			var aFields = [{
-					id: "nameInput",
-					required: true,
-					maxLength: 64,
-					errorMessage: "Введите имя (не более 64 символов)"
-				},
-				{
-					id: "surnameInput",
-					required: true,
-					maxLength: 64,
-					errorMessage: "Введите фамилию (не более 64 символов)"
-				},
-				{
-					id: "phoneInput",
-					required: true,
-					pattern: /^\+375\d{9}$/,
-					errorMessage: "Введите номер телефона в формате +375XXXXXXXXX"
-				},
-				{
-					id: "emailInput",
-					required: true,
-					pattern: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
-					errorMessage: "Введите корректный email"
-				},
-				{
-					id: "passwordInput",
-					required: true,
-					minLength: 8,
-					errorMessage: "Пароль должен содержать минимум 8 символов"
-				},
-				{
-					id: "confirmPasswordInput",
-					required: true,
-					matchWith: "passwordInput",
-					errorMessage: "Пароли должны совпадать"
-				}
-			];
+			var oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+			var aFields = [
+                {
+                    id: "nameInput",
+                    required: true,
+                    maxLength: 64,
+                    errorMessage: oBundle.getText("errorName")
+                },
+                {
+                    id: "surnameInput",
+                    required: true,
+                    maxLength: 64,
+                    errorMessage: oBundle.getText("errorSurname")
+                },
+                {
+                    id: "phoneInput",
+                    required: true,
+                    pattern: /^\+375\d{9}$/,
+                    errorMessage: oBundle.getText("errorPhone")
+                },
+                {
+                    id: "emailInput",
+                    required: true,
+                    pattern: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+                    errorMessage: oBundle.getText("errorEmail")
+                },
+                {
+                    id: "passwordInput",
+                    required: true,
+                    minLength: 8,
+                    errorMessage: oBundle.getText("errorPassword")
+                },
+                {
+                    id: "confirmPasswordInput",
+                    required: true,
+                    matchWith: "passwordInput",
+                    errorMessage: oBundle.getText("errorConfirmPassword")
+                }
+            ];
 
 			aFields.forEach(function (oField) {
 				var oInput = oView.byId(oField.id);
