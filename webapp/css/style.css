@@ -1,1 +1,8 @@
-/* Enter your custom styles here */
+
+.agreementText {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    display: inline-block;
+    hyphens: auto;
+}

@@ -7,51 +7,46 @@
 				<content>
 					<VBox id="messageStripContainer" />
 					<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanL="4" columnsL="1">
-						<Label text="Имя" />
-						<Input id="nameInput" maxLength="64" required="true"
-							valueStateText="Введите не более 64 символов" />
-						<Label text="Фамилия" />
-						<Input id="surnameInput" maxLength="64" required="true"
-							valueStateText="Введите не более 64 символов" />
-						<Label text="Город" />
-						<Select enabled="{/Enabled}" editable="{/Editable}" forceSelection="false" id="citySelect" 
-							selectedKey="{/SelectedCity}" items="{
-							path: '/CityCollection',
-							sorter: { path: 'Name' }
-						}">
-							<core:Item key="{CityId}" text="{Name}"></core:Item>
-						</Select>
-						<Label text="Номер телефона" />
-						<Input id="phoneInput" maxLength="13" required="true"
-							valueStateText="Введите номер в формате +375..." />
-
-						<Label text="Email" />
-						<Input id="emailInput" maxLength="256" required="true"
-							valueStateText="Введите корректный email" />
-
-						<Label text="Пароль" />
-						<Input id="passwordInput" type="Password" maxLength="64" required="true"
-							placeholder="Минимум 8 символов, буквы и цифры"
-							valueStateText="Пароль должен содержать минимум 8 символов, буквы и цифры" />
-						<Label text="Потвердите пароль" />
-						<Input id="confirmPasswordInput" type="Password" maxLength="64" required="true"
-							valueStateText="Пароли должны совпадать" />
-						<Label text="Промокод" />
-						<Input id="promocodeInput" value="{/promocodeValue}" enabled="{/promoCodeEnabled}" /><Label />
-						<HBox>
-							<CheckBox id="agreementCheckbox" text="Я согласен с" selected="{state>/agreementChecked}" />
-
-							<Link href="./pdf/UsersAgreement.pdf" class="sapUiTinyMarginBeginEnd"
-								text="условиями пользовательского соглашения" press="onUserAgreementPress" />
-							<Text text=" и " />
-							<Link href="./pdf/PlatformRules.pdf" class="sapUiTinyMarginBeginEnd"
-								text="правилами платформы" press="onPlatformRulesPress" />
-						</HBox>
-						<Label />
-						<Button id="registerButton" text="Зарегистрироваться" type="Emphasized"
-							enabled="{state>/agreementChecked}" press="onRegister" />
-						<Button text="Отменить" type="Default" press="onCancel" />
-					</f:SimpleForm>
+                            <Label text="{i18n>labelName}" />
+                            <Input id="nameInput" maxLength="64" required="true" liveChange="onInputLiveChange"
+                                valueStateText="{i18n>valueStateName}" />
+                            <Label text="{i18n>labelSurname}" />
+                            <Input id="surnameInput" maxLength="64" required="true" liveChange="onInputLiveChange"
+                                valueStateText="{i18n>valueStateSurname}" />
+                            <Label text="{i18n>labelCity}" />
+                            <Select enabled="{/Enabled}" editable="{/Editable}" forceSelection="false" id="citySelect"
+                                selectedKey="{/SelectedCity}" items="{
+                            path: '/CityCollection',
+                            sorter: { path: 'Name' }
+                        }">
+                                <core:Item key="{CityId}" text="{Name}"></core:Item>
+                            </Select>
+                            <Label text="{i18n>labelPhone}" />
+                            <Input id="phoneInput" maxLength="13" required="true" liveChange="onInputLiveChange"
+                                valueStateText="{i18n>valueStatePhone}" />
+                            <Label text="{i18n>labelEmail}" />
+                            <Input id="emailInput" maxLength="256" required="true" liveChange="onInputLiveChange"
+                                valueStateText="{i18n>valueStateEmail}" />
+                            <Label text="{i18n>labelPassword}" />
+                            <Input id="passwordInput" type="Password" maxLength="64" required="true"
+                                liveChange="onInputLiveChange" placeholder="{i18n>placeholderPassword}"
+                                valueStateText="{i18n>valueStatePassword}" />
+                            <Label text="{i18n>labelConfirmPassword}" />
+                            <Input id="confirmPasswordInput" type="Password" maxLength="64" required="true"
+                                liveChange="onInputLiveChange" valueStateText="{i18n>valueStateConfirmPassword}" />
+                            <Label text="{i18n>labelPromoCode}" />
+                            <Input id="promocodeInput" value="{/promocodeValue}"
+                                enabled="{/promoCodeEnabled}" /><Label />
+                            <HBox width="100%">
+                                <CheckBox id="agreementCheckbox" text=""
+                                    selected="{state>/agreementChecked}" />
+                                <FormattedText htmlText="{/CheckboxText}" class="agreementText"/>
+                            </HBox>
+                            <Label />
+                            <Button id="registerButton" text="{i18n>buttonRegister}" type="Emphasized"
+                                enabled="{state>/agreementChecked}" press="onRegister" />
+                            <Button text="{i18n>buttonCancel}" type="Default" press="onCancel" />
+                        </f:SimpleForm>
 				</content>
 			</Page>
 		</pages>

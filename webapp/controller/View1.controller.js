@@ -7,6 +7,7 @@ sap.ui.define([
 	return Controller.extend("zjblessonsLesson9.controller.View1", {
 		onInit: function () {
 			var oData = {
+				"CheckboxText": "<p> Я согласен с <a href=\"./src/pdf/UsersAgreement.pdf\" target=\"_blank\"> условиями пользовательского соглашения </a> и	<a href=\"./src/pdf/PlatformRules.pdf\" target=\"_blank\">правилами платформы</a></p>",
 				"SelectedCity": "Minsk",
 				"CityCollection": [{
 						"CityId": "Minsk",
@@ -58,16 +59,18 @@ sap.ui.define([
 		},
 		_resetForm: function () {
 			const oView = this.getView();
-			["nameInput", "surnameInput", "citySelect", "phoneInput", "emailInput", "passwordInput", "confirmPasswordInput"]
-			.forEach(id => oView.byId(id).setValue(""));
+			["nameInput", "surnameInput", "phoneInput", "emailInput", "passwordInput", "confirmPasswordInput"]
+			.forEach(id => {
+				const oInput = oView.byId(id);
+				oInput.setValue("");
+				oInput.setValueState(sap.ui.core.ValueState.None);
+			});
+			oView.byId("citySelect").setSelectedKey("Minsk");
+			oView.byId("citySelect").setValueState(sap.ui.core.ValueState.None);
+		
 			oView.byId("agreementCheckbox").setSelected(false);
-		},
-		onUserAgreementPress: function () {
-			window.open("./pdf/UsersAgreement.pdf", "_blank");
-		},
-		onPlatformRulesPress: function () {
-			window.open("./pdf/PlatformRules.pdf", "_blank");
-		},
+		},	
+
 		onRegister: function () {
 			var oView = this.getView();
 			var bValid = this._validateForm();
@@ -121,7 +124,7 @@ sap.ui.define([
 				{
 					id: "emailInput",
 					required: true,
-					pattern: /^\S+@\S+\.\S+$/,
+					pattern: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
 					errorMessage: "Введите корректный email"
 				},
 				{
@@ -174,6 +177,10 @@ sap.ui.define([
 			});
 
 			return bValid;
+		},
+		onInputLiveChange: function (oEvent) {
+			const oInput = oEvent.getSource();
+			oInput.setValueState(sap.ui.core.ValueState.None);
 		},
 		_getPromoCodeFromURL: function () {
 			var sQuery = window.location.search;
