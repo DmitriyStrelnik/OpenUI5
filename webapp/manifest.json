@@ -1,24 +1,33 @@
 {
-	"_version": "1.7.0",
+	"_version": "1.9.0",
 	"sap.app": {
-		"id": "zjblessonsLesson9",
+		"id": "zjblessons.Lesson6",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
 		"applicationVersion": {
 			"version": "1.0.0"
 		},
-		"title": "{{appTitle}}",
-		"description": "{{appDescription}}",
+		"dataSources": {
+			"mainService": {
+				"uri": "/jetCloud/apps/zjblessons/jblesson02/v01/01.xsodata/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml"
+				}
+			}
+		},
 		"sourceTemplate": {
-			"id": "ui5template.basicSAPUI5ApplicationProject",
-			"version": "1.40.12"
+			"id": "sap.ui.ui5-template-plugin.1worklist",
+			"version": "1.52.7"
 		}
 	},
-
 	"sap.ui": {
 		"technology": "UI5",
 		"icons": {
-			"icon": "",
+			"icon": "sap-icon://task",
 			"favIcon": "",
 			"phone": "",
 			"phone@2": "",
@@ -29,26 +38,21 @@
 			"desktop": true,
 			"tablet": true,
 			"phone": true
-		},
-		"supportedThemes": [
-			"sap_hcb",
-			"sap_belize"
-
-		]
+		}
 	},
-
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "zjblessonsLesson9.view.View1",
-			"type": "XML"
+			"viewName": "zjblessons.Lesson6.view.App",
+			"type": "XML",
+			"async": true,
+			"id": "app"
 		},
 		"dependencies": {
-			"minUI5Version": "1.30.0",
+			"minUI5Version": "1.42.0",
 			"libs": {
 				"sap.ui.core": {},
 				"sap.m": {},
-				"sap.ui.layout": {},
-				"sap.uxap": {}
+				"sap.f": {}
 			}
 		},
 		"contentDensities": {
@@ -59,14 +63,70 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "zjblessonsLesson9.i18n.i18n"
+					"bundleName": "zjblessons.Lesson6.i18n.i18n"
+				}
+			},
+			"": {
+				"dataSource": "mainService",
+				"preload": true,
+				"settings": {
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "None"
 				}
 			}
 		},
-		"resources": {
-			"css": [{
-				"uri": "css/style.css"
-			}]
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "zjblessons.Lesson6.view",
+				"controlId": "app",
+				"controlAggregation": "pages",
+				"bypassed": {
+					"target": [
+						"notFound"
+					]
+				},
+				"async": true
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "worklist",
+					"target": [
+						"worklist"
+					]
+				},
+				{
+					"pattern": "zjblessons_base_Headers/{objectId}",
+					"name": "object",
+					"target": [
+						"object"
+					]
+				}
+			],
+			"targets": {
+				"worklist": {
+					"viewName": "Worklist",
+					"viewId": "worklist",
+					"viewLevel": 1,
+					"title": "{i18n>worklistViewTitle}"
+				},
+				"object": {
+					"viewName": "Object",
+					"viewId": "object",
+					"viewLevel": 2,
+					"title": "{i18n>objectViewTitle}"
+				},
+				"objectNotFound": {
+					"viewName": "ObjectNotFound",
+					"viewId": "objectNotFound"
+				},
+				"notFound": {
+					"viewName": "NotFound",
+					"viewId": "notFound"
+				}
+			}
 		}
 	}
 }

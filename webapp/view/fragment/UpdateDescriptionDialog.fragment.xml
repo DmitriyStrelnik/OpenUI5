@@ -1,0 +1,14 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:c="sap.ui.core">
+    <Dialog id="updateDescriptionDialog" title="{i18n>UpdateDescription}" class="sapUiContentPadding">
+        <content>
+            <VBox>
+                <Label text="{i18n>NewDescription}" />
+                <Input id="newDescriptionInput" />
+            </VBox>
+        </content>
+        <buttons>
+            <Button text="{i18n>okButton}" press="onDescriptionDialogOk" />
+            <Button text="{i18n>cancelButton}" press="onDescriptionDialogCancel" />
+        </buttons>
+    </Dialog>
+</c:FragmentDefinition>
