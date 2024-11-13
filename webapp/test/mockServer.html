@@ -8,28 +8,31 @@
 
 	<!-- Bootstrapping UI5 -->
 	<script id="sap-ui-bootstrap"
-			src="https://openui5.hana.ondemand.com/1.129.0/resources/sap-ui-core.js"
-			data-sap-ui-libs="sap.m, sap.f"
-			data-sap-ui-theme="sap_horizon"
+			src="../resources/sap-ui-core.js"
+			data-sap-ui-libs="sap.m"
+			data-sap-ui-theme="sap_belize"
 			data-sap-ui-compatVersion="edge"
 			data-sap-ui-preload="async"
-			data-sap-ui-resourceroots='{"zjblessons.Lesson14": "."}'
-			data-sap-ui-frameOptions="trusted">
+			data-sap-ui-resourceroots='{"zjblessons.Lesson14": "../"}'
+			data-sap-ui-frameOptions='allow'> 	// NON-SECURE setting for testing environment
 	</script>
 
 	<script>
 		sap.ui.getCore().attachInit(function () {
 			sap.ui.require([
+				"zjblessons/Lesson14/localService/mockserver",
 				"sap/m/Shell",
 				"sap/ui/core/ComponentContainer"
-			], function (Shell, ComponentContainer) {
+			], function (server, Shell, ComponentContainer) {
+				// set up test service for local testing
+				server.init();
 				// initialize the UI component
 				new Shell({
 					app: new ComponentContainer({
 						height: "100%",
 						name: "zjblessons.Lesson14",
 						settings: {
-							id: "Lesson14"
+							id: ""
 						}
 					})
 				}).placeAt("content");

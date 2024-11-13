@@ -1,20 +1,20 @@
-<mvc:View controllerName="zjblessons.Lesson6.controller.Worklist" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+<mvc:View controllerName="zjblessons.Lesson14.controller.Worklist" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
 
 
 	<Page>
 		<customHeader>
 			<Toolbar>
-                <content>
-                    <IconTabHeader selectedKey="{= ${worklistView>/sITBKey}}" select="OnIconTabHeaderSelect">
-                        <items>
-                            <IconTabFilter key="All" text="{i18n>all}" />
-                            <IconTabFilter key="Deactivated" text="{i18n>deactivated}" />
-                        </items>
-                    </IconTabHeader>
-                </content>
-            </Toolbar>
+				<content>
+					<IconTabHeader selectedKey="{= ${worklistView>/sITBKey}}" select="OnIconTabHeaderSelect">
+						<items>
+							<IconTabFilter key="All" text="{i18n>all}" />
+							<IconTabFilter key="Deactivated" text="{i18n>deactivated}" />
+						</items>
+					</IconTabHeader>
+				</content>
+			</Toolbar>
 		</customHeader>
-		<Table id="table"  width="auto" noDataText="{worklistView>/tableNoDataText}" itemPress="onItemSelect" 
+		<Table id="table" width="auto" noDataText="{worklistView>/tableNoDataText}" itemPress="onItemSelect"
 			busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="false"
 			growingThreshold="15">
 
@@ -22,22 +22,13 @@
 				<Toolbar>
 					<Title id="tableHeader" text="{= ${worklistView>/sTotal}} entries in the table" />
 					<ToolbarSpacer />
-
-					<DateRangeSelection id="dateRangeSelection" change="_onDateRangeChange" delimiter="to"
-						displayFormat="yyyy-MM-dd" width="auto" />
-						<Button id="btnAction1" text="{i18n>Action1}" press="onAction1Press" />
+					<Button text="Save Changes" press="onSaveChanges" />
 					<Button icon="{i18n>createIcon}" press="onPressCreate" />
 					<Button icon="{i18n>refreshIcon}" press="onRefresh" />
-					<Button id="btnAction2BatchFalse" text="{i18n>Action2BatchFalse}" press="onAction2BatchFalse" enabled="false" />
-                    <Button id="btnAction2BatchTrue" text="{i18n>Action2BatchTrue}" press="onAction2BatchTrue" enabled="false" />
-                
 				</Toolbar>
 			</headerToolbar>
 
 			<columns>
-				<Column width="auto">
-                    <Text text="" />
-                </Column>
 				<Column id="nameColumn">
 					<Text text="{i18n>tableNameColumnTitle}" id="nameColumnTitle" />
 				</Column>
