@@ -23,7 +23,6 @@
 					<Title id="tableHeader" text="{= ${worklistView>/sTotal}} entries in the table" />
 					<ToolbarSpacer />
 					<Button text="Save Changes" press="onSaveChanges" />
-					<Button icon="{i18n>createIcon}" press="onPressCreate" />
 					<Button icon="{i18n>refreshIcon}" press="onRefresh" />
 				</Toolbar>
 			</headerToolbar>
@@ -48,7 +47,6 @@
 					<Text text="{i18n>tableCreatedColumnTitle}" id="createdColumnTitle" />
 				</Column>
 				<Column width="5%" />
-				<Column width="4%" />
 			</columns>
 
 

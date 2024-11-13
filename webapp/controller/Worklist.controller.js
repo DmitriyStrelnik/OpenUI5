@@ -90,11 +90,6 @@ sap.ui.define([
                         state: "{= ${Version} === 'D'}",
                         change: this.ChangeVersion.bind(this)
                     }),
-                    new sap.m.Button({
-                        icon: this.getResourceBundle().getText('deleteIcon'),
-                        press: this.onPressDeleteItem.bind(this),
-                        type: 'Transparent'
-                    }),
                 ]
             });
             return oTemplate;
@@ -121,17 +116,6 @@ sap.ui.define([
                 MessageToast.show("No changes to save.");
             }
         },
-		_loadCreateDialog: async function () {
-			this._oDialog = await Fragment.load({
-				name: "zjblessons.Lesson6.view.fragment.CreateDialog",
-				controller: this,
-				id: "CreateNewFields"
-			}).then(oDialog => {
-				this.getView().addDependent(oDialog);
-				return oDialog;
-			})
-			this._oDialog.open();
-		},
 		_getTableFilters: function () {
 			const oWorkListModel = this.getModel('worklistView');
 			const sSelectedKey = oWorkListModel.getProperty('/sITBKey');
@@ -143,7 +127,6 @@ sap.ui.define([
 			var sTotal = oBinding.getLength(); 
 			this.getModel('worklistView').setProperty('/sTotal', sTotal)
 		},
-		
 		ChangeVersion: function (oEvent) {
 			const sVersion = oEvent.getParameter('state') ? 'D' : 'A';
 			const sPath = oEvent.getSource().getBindingContext().getPath();
@@ -157,61 +140,9 @@ sap.ui.define([
 					sap.m.MessageToast.show("Error updating version.");
 				}
 			});
-		},
-		onPressDeleteItem: function (oEvent) {
-			const oBindingContext = oEvent.getSource().getBindingContext();
-			const sKey = this.getModel().createKey('/zjblessons_base_Headers', {
-				HeaderID: oBindingContext.getProperty('HeaderID')
-			});
-			this.getModel().remove(sKey, {
-				success: () => {
-					sap.m.MessageToast.show("Item successfully deleted.");
-					this.getModel().refresh(true);
-				},
-				error: () => {
-					sap.m.MessageToast.show("Error deleting item.");
-				}
-			});
-		},		
+		},	
 		onRefresh: function () {
 			this._bindTable(true);
-		},
-		onPressCreate: function () {
-			this._loadCreateDialog();
-		},
-		onDialogBeforeOpen: function (oEvent) {
-			const oDialog = oEvent.getSource();
-			const oParams = {
-					Version: "A",
-					HeaderID: "0",
-					Created: new Date(),
-					IntegrationID: null,
-				},
-				oEntry = this.getModel().createEntry("/zjblessons_base_Headers", {
-					properties: oParams
-				});
-
-			oDialog.setBindingContext(oEntry);
-		},
-		onSavePress(oEvent) {
-			this.getModel().submitChanges({
-				success: () => {
-					sap.m.MessageToast.show("Item successfully created.");
-					this.getModel().refresh(true);
-				},
-				error: () => {
-					sap.m.MessageToast.show("Error creating item.");
-				}
-			});
-			this._oDialog.close();
-			this._oDialog.destroy();
-			this._oDialog = null;
-		},
-		onPressCancel: function () {
-			this.getModel().resetChanges();
-			this._oDialog.close();
-			this._oDialog.destroy();
-			this._oDialog = null;
 		},
 		OnIconTabHeaderSelect: function (oEvent) {
 			const oSelctedKey = oEvent.getParameter('key');
