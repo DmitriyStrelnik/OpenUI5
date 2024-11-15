@@ -72,6 +72,9 @@ sap.ui.define([
 
             var aMovedItem = aItems.splice(iDraggedIndex, 1);
             aItems.splice(iDroppedIndex, 0, aMovedItem[0]);
+            aItems.forEach(function(item, index) {
+                item.order = index+1;
+            });
 
             this.getModel("worklistView").setProperty("/items", aItems);
         },
