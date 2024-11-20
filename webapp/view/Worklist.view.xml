@@ -1,11 +1,10 @@
 <mvc:View controllerName="zjblessons.Lesson14.controller.Worklist" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
-	xmlns:dnd="sap.ui.core.dnd">
+	xmlns:dnd="sap.ui.core.dnd" xmlns:controls="zjblessons.Lesson14.controller.controls">
 
 
 	<Page>
-		<customHeader>
-
-		</customHeader>
+		<controls:CustomATHBox src="src/chibi-pochita-logo.png" initials="ABC"  textAlign="Center" width="70px" backgroundColor="TileIcon" displayShape="Square"
+				displaySize="XL" text="User Nickname" maxLines="2" />
 		<Table id="table" width="auto" noDataText="{worklistView>/tableNoDataText}" itemPress="onItemSelect"
 			busyIndicatorDelay="{worklistView>/tableBusyDelay}">
 			<dragDropConfig>
