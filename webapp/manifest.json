@@ -1,7 +1,7 @@
 {
 	"_version": "1.9.0",
 	"sap.app": {
-		"id": "zjblessons.Lesson14",
+		"id": "zjblessons.Lesson18",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"title": "{{appTitle}}",
@@ -42,17 +42,16 @@
 	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "zjblessons.Lesson14.view.App",
+			"viewName": "zjblessons.Lesson18.view.App",
 			"type": "XML",
 			"async": true,
 			"id": "app"
 		},
+		"resourceRoots": { "jblibs": "../../../../../../jetCloud/apps/jbcommon/zjblibs/js/v20004/" },
 		"dependencies": {
 			"minUI5Version": "1.42.0",
 			"libs": {
-				"sap.ui.core": {},
-				"sap.m": {},
-				"sap.f": {}
+				"jblibs": {}
 			}
 		},
 		"contentDensities": {
@@ -63,29 +62,24 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "zjblessons.Lesson14.i18n.i18n"
+					"bundleName": "zjblessons.Lesson18.i18n.i18n"
 				}
 			},
 			"": {
 				"dataSource": "mainService",
+				"preload": true,
 				"settings": {
-					"defaultCountMode": "Inline"
-				},
-				"preload": true
+          		"defaultBindingMode": "OneWay"
+        }
 			}
 		},
 		"routing": {
 			"config": {
 				"routerClass": "sap.m.routing.Router",
 				"viewType": "XML",
-				"viewPath": "zjblessons.Lesson14.view",
+				"viewPath": "zjblessons.Lesson18.view",
 				"controlId": "app",
 				"controlAggregation": "pages",
-				"bypassed": {
-					"target": [
-						"notFound"
-					]
-				},
 				"async": true
 			},
 			"routes": [
@@ -95,13 +89,6 @@
 					"target": [
 						"worklist"
 					]
-				},
-				{
-					"pattern": "zjblessons_base_Headers/{objectId}",
-					"name": "object",
-					"target": [
-						"object"
-					]
 				}
 			],
 			"targets": {
@@ -110,20 +97,6 @@
 					"viewId": "worklist",
 					"viewLevel": 1,
 					"title": "{i18n>worklistViewTitle}"
-				},
-				"object": {
-					"viewName": "Object",
-					"viewId": "object",
-					"viewLevel": 2,
-					"title": "{i18n>objectViewTitle}"
-				},
-				"objectNotFound": {
-					"viewName": "ObjectNotFound",
-					"viewId": "objectNotFound"
-				},
-				"notFound": {
-					"viewName": "NotFound",
-					"viewId": "notFound"
 				}
 			}
 		}

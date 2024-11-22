@@ -1,197 +1,301 @@
 /*global location history */
 sap.ui.define([
-	"zjblessons/Lesson14/controller/BaseController",
-	"sap/ui/model/json/JSONModel",
-	"zjblessons/Lesson14/model/formatter",
-	"sap/ui/model/Filter",
-	"sap/ui/model/Sorter",
-	"sap/ui/model/FilterOperator",
-	"sap/ui/core/Fragment",
-	"sap/m/MessageToast"
-], function (BaseController, JSONModel, formatter, Filter, Sorter, FilterOperator, Fragment, MessageToast) {
-	"use strict";
+		"zjblessons/Lesson18/controller/BaseController",
+		"sap/ui/model/json/JSONModel",
+	], function (BaseController, JSONModel) {
+		"use strict";
 
-	return BaseController.extend("zjblessons.Lesson14.controller.Worklist", {
-		formatter: formatter,
-
-        onInit: function () {
-
-			var oViewModel = new JSONModel({
-				sTotal: '0',
-			});
-    		this.setModel(oViewModel, "worklistView");
-			this.getOwnerComponent().getModel().setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);
-   			 this._loadData();
-        },
-		_loadData: function() {
-			this.getOwnerComponent().getModel().read("/zjblessons_base_Headers", {
-				success: function(oData) {
-					oData.results.forEach(function(item, index) {
-						item.order = index+1;
-					});
-					this.getModel("worklistView").setData({ items: oData.results });
-					this._getTotalItems();
-				}.bind(this),
-				error: function(oError) {
-					sap.m.MessageToast.show("Ошибка загрузки данных.");
+		return BaseController.extend("zjblessons.Lesson18.controller.Worklist", {
+			// Таблицы jbcommon_auth_CreatedBy и jbcommon_auth_ModifiedBy не имеют поля CreatedByAvatar и ModifiedByAvatar. 
+			// Так как по заданию требовалось указывать эти таблицы и Аватары из других таблиц пусты(Items), я оставил таблицы по условию.
+			jsonAnnotation: new JSONModel({
+				RequestAtLeast: "",
+				Annotation: [
+				  {
+					"id": "HeaderID",
+					"label": "{i18n>HeaderID}",
+					"Filter": {
+					  "order": 1,
+					  "visible": true,
+					  "hidden": false,
+					  "mode": "SingleSelectMaster",
+					  "filter": "HeaderID",
+					  "text": "HeaderID",
+					  "sort": "HeaderID",
+					  "key": "HeaderID",
+					  "entitySet": "zjblessons_base_Headers",
+					  
+					},
+					"Column": {
+					  "order": 1,
+					  "sortProperty": "HeaderID",
+					  "visible": true,
+					  "type": "text",
+					  "select": "HeaderID",
+					  "text": "{HeaderID}"
+					}					
+				  },
+				  {
+					"id": "MaterialID",
+					"label": "{i18n>MaterialID}",
+					"Filter": {
+					  "order": 2,
+					  "visible": true,
+					  "hidden": false,
+					  "mode": "MultiSelect",
+					  "filter": "MaterialID",
+					  "text": "MaterialID",
+					  "sort": "MaterialID",
+					  "key": "MaterialID",
+					  "entitySet": "zjblessons_base_Materials",
+					  
+					},
+					"Column": {
+					  "order": 2,
+					  "sortProperty": "MaterialID",
+					  "visible": true,
+					  "type": "text",
+					  "select": "MaterialID",
+					  "text": "{MaterialID}"
+					}					
+				  },
+				  {
+					"id": "GroupID",
+					"label": "{i18n>GroupID}",
+					"Filter": {
+					  "order": 3,
+					  "visible": true,
+					  "hidden": false,
+					  "mode": "MultiSelect",
+					  "filter": "GroupID",
+					  "text": "GroupID",
+					  "sort": "GroupID",
+					  "key": "GroupID",
+					  "entitySet": "zjblessons_base_Groups",
+					  
+					},
+					"Column": {
+					  "order": 3,
+					  "sortProperty": "GroupID",
+					  "visible": true,
+					  "type": "text",
+					  "select": "GroupID",
+					  "text": "{GroupID}"
+					}					
+				  },
+				  {
+					"id": "SubGroupID",
+					"label": "{i18n>SubGroupID}",
+					"Filter": {
+					  "order": 4,
+					  "visible": true,
+					  "hidden": false,
+					  "mode": "MultiSelect",
+					  "filter": "SubGroupID",
+					  "text": "SubGroupID",
+					  "sort": "SubGroupID",
+					  "key": "SubGroupID",
+					  "entitySet": "zjblessons_base_SubGroups",
+					  
+					},
+					"Column": {
+					  "order": 4,
+					  "sortProperty": "SubGroupID",
+					  "visible": true,
+					  "type": "text",
+					  "select": "SubGroupID",
+					  "text": "{SubGroupID}"
+					}					
+				  },
+				  {
+					"id": "Quantity",
+					"label": "{i18n>Quantity}",
+					"Filter": {
+					  "order": 5,
+					  "visible": true,
+					  "hidden": false,
+					  "mode": "SearchField",
+					  "filter": "Quantity",
+					  "text": "Quantity",
+					  "sort": "Quantity",
+					  "key": "Quantity",
+					  "filterKey": "Quantity",
+					  "entitySet": "zjblessons_base_Items",
+					  
+					},
+					"Column": {
+					  "order": 5,
+					  "sortProperty": "Quantity",
+					  "visible": true,
+					  "type": "number",
+					  "select": "Quantity",
+					  "text": "{Quantity}"
+					}					
+				  },
+				  {
+					"id": "Price",
+					"label": "{i18n>Price}",
+					"Filter": {
+					  "order": 6,
+					  "visible": true,
+					  "hidden": false,
+					  "mode": "SearchField",
+					  "filter": "Price",
+					  "text": "Price",
+					  "sort": "Price",
+					  "key": "Price",
+					  "filterKey": "Price",
+					  "entitySet": "zjblessons_base_Items",
+					  
+					},
+					"Column": {
+					  "order": 6,
+					  "sortProperty": "Price",
+					  "visible": true,
+					  "type": "number",
+					  "select": "Price",
+					  "text": "{Price}"
+					}					
+				  },
+				  {
+					"id": "Created",
+					"label": "{i18n>Created}",
+					"Filter": {
+					  "order": 7,
+					  "visible": true,
+					  "hidden": false,
+					  "mode": "DateFilter",
+					  "entitySet": "zjblessons_base_Items",
+					  "datePath": "Created",
+            		  "dateMode": true,
+					  "selectedPeriod": "all",
+            		  "visiblePeriodButtons": "day, week, month, year, all"
+					},
+					"Column": {
+					  "order": 7,
+					  "sortProperty": "Created",
+					  "visible": true,
+					  "type": "date",
+					  "select": "Created",
+					  "text": "{Created}",
+					   "sortOrder": 1,
+    				   "sort": "desc"  
+					}					
+				  },
+				  {
+					"id": "CreatedBy",
+					"label": "{i18n>CreatedBy}",
+					"Filter": {
+					  "order": 8,
+					  "visible": true,
+					  "hidden": false,
+					  "mode": "MultiSelect",
+					  "filter": "CreatedBy",
+					  "text": "CreatedByFullName",
+					  "sort": "CreatedByFullName",
+					  "key": "CreatedBy",
+					  "entitySet": "jbcommon_auth_CreatedBy",
+					  "image": "CreatedByAvatar"
+					},
+					"Column": {
+					  "order": 8,
+					  "sortProperty": "CreatedByFullName",
+					  "visible": true,
+					  "type": "avatarAndLink",
+					  "select": "CreatedByAvatar,CreatedByFullName",
+					}					
+				  },
+				  {
+					"id": "Modified",
+					"label": "{i18n>Modified}",
+					"Filter": {
+					  "order": 9,
+					  "visible": true,
+					  "hidden": false,
+					  "mode": "DateFilter",
+					  "filter": "Modified",
+					  "text": "Modified",
+					  "sort": "Modified",
+					  "key": "Modified",
+					  "entitySet": "zjblessons_base_Items",
+					  "datePath": "Modified",
+            		  "dateMode": true,
+					  "selectedPeriod": "all",
+            		  "visiblePeriodButtons": "day, week, month, year, all"
+					  
+					},
+					"Column": {
+					  "order": 9,
+					  "sortProperty": "Modified",
+					  "visible": true,
+					  "type": "dateTime",
+					  "select": "Modified",
+					  "text": "{Modified}"
+					}					
+				  },
+				  {
+					"id": "ModifiedBy",
+					"label": "{i18n>ModifiedBy}",
+					"Filter": {
+					  "order": 10,
+					  "visible": true,
+					  "hidden": false,
+					  "mode": "MultiSelect",
+					  "filter": "ModifiedBy",
+					  "text": "ModifiedByFullName",
+					  "sort": "ModifiedByFullName",
+					  "key": "ModifiedBy",
+					  "entitySet": "jbcommon_auth_ModifiedBy",
+					  "image": "ModifiedByAvatar"
+					},
+					"Column": {
+					  "order": 10,
+					  "sortProperty": "ModifiedByFullName",
+					  "visible": true,
+					  "type": "avatarAndLink",
+					  "select": "ModifiedByAvatar, ModifiedByFullName",
+					}					
+				  },
+				],
+			}),
+			onInit : function () {
+				const oViewModel = new JSONModel({});
+				this.setModel(oViewModel, "worklistView");
+				this.setModel(this.jsonAnnotation, "annotation");
+			},
+			onPressRefresh:function(){
+				this.byId('table').getBinding('rows').refresh();
+			  },
+		
+			  prepareSelect: function (oEvent) {
+				this.aSorter = oEvent.getParameter("aSorts");
+				this.sSelect = oEvent.getParameter("sSelect");
+		
+				this.callBindTable();
+			  },
+		
+			  callBindTable: function (sPath) {
+				if (this.sSelect && this.aFilters) {
+				let sRequestAtLeast = this.getModel('annotation').getData().RequestAtLeast;
+				  this.byId("table").bindRows({
+					path: "/zjblessons_base_Items",
+					template: new sap.ui.table.Row({}),
+					filters: this.aFilters,
+					sorter: this.aSorter,
+					parameters: {
+					  select: this.sSelect + (sRequestAtLeast ? ","+ sRequestAtLeast: ''),
+					},
+				  });
 				}
-			});
-		},
-        onBeforeRendering: function () {
-            this._bindTable();
-        },
-        _bindTable: function (bIsRefresh = false) {
-			const oTable = this.getView().byId('table');
-			oTable.bindItems({
-				path: 'worklistView>/items',
-				templateShareable: false,
-				template: this._getTableTemplate(),
-				events: {
-					dataReceived: () => {
-						if (bIsRefresh) {
-							sap.m.MessageToast.show("Таблица успешно обновлена");
-						}
-					}
-				},
-			});
-		},
-		onDrop: function(oEvent) {
-            var oDragged = oEvent.getParameter("draggedControl");
-            var oDropped = oEvent.getParameter("droppedControl");
-            var sInsertPosition = oEvent.getParameter("dropPosition");
+			  },
+		
+			  onPressFilterBarChange: function (oEvent) {
+				  this.aFilters = oEvent.getParameter("OdataFilters");
+				  
+				  this.callBindTable();
+			  }
+		
 
-            var oTable = this.byId("table");
-            var aItems = this.getModel("worklistView").getProperty("/items");
-
-            var iDraggedIndex = oTable.indexOfItem(oDragged);
-            var iDroppedIndex = oTable.indexOfItem(oDropped);
-
-            if (sInsertPosition === "After") {
-                iDroppedIndex++;
-            }
-
-            var aMovedItem = aItems.splice(iDraggedIndex, 1);
-            aItems.splice(iDroppedIndex, 0, aMovedItem[0]);
-            aItems.forEach(function(item, index) {
-                item.order = index+1;
-            });
-
-            this.getModel("worklistView").setProperty("/items", aItems);
-        },
-				
-
-        _getTableTemplate: function () {
-            const oTemplate = new sap.m.ColumnListItem({
-                highlight: "{= ${worklistView>Version} ===  'D' ? 'Error' : 'Success'}",
-                type: 'Inactive', 
-                cells: [
-					new sap.m.Text({
-                        text: "{worklistView>order}"
-                    }),
-                    new sap.m.Text({
-                        text: "{worklistView>DocumentNumber}"
-                    }),
-                    new sap.m.Text({
-                        text: {
-                            path: "worklistView>DocumentDate",
-                            type: "sap.ui.model.type.Date",
-                            formatOptions: { pattern: "yyyy-MM-dd" }
-                        }
-                    }),
-                    new sap.m.Text({
-                        text: "{worklistView>PlantText}"
-                    }),
-                    new sap.m.Text({
-                        text: "{worklistView>RegionText}"
-                    }),
-                    new sap.m.Text({
-                        text:  "{worklistView>Description}"   
-                    }),
-                    new sap.m.Text({
-						text: {
-                            path: "worklistView>Created",
-                            type: "sap.ui.model.type.Date",
-                            formatOptions: { pattern: "yyyy-MM-dd" }
-                        }
-                    }),
-                    new sap.m.Switch({
-                        state: "{= ${worklistView>Version} === 'D'}",
-                        change: this.ChangeVersion.bind(this)
-                    }),
-                ]
-            });
-            return oTemplate;
-        },
-		_getTotalItems: function () {
-			// CountMode - Inline установил в моделе в manifest.json
-			const oBinding = this.getView().byId("table").getBinding("items");
-			var sTotal = oBinding.getLength(); 
-			this.getModel('worklistView').setProperty('/sTotal', sTotal)
-		},
-		ChangeVersion: function (oEvent) {
-			const sVersion = oEvent.getParameter('state') ? 'D' : 'A';
-			const sPath = oEvent.getSource().getBindingContext().getPath();
-			this.getModel().setProperty(`${sPath}/Version`, sVersion);
-			this.getModel().submitChanges({
-				success: () => {
-					sap.m.MessageToast.show("Version successfully updated.");
-					this.getModel().refresh(true);
-				},
-				error: () => {
-					sap.m.MessageToast.show("Error updating version.");
-				}
-			});
-		},	
-		onRefresh: function () {
-			this._bindTable(true);
-		},
-		OnIconTabHeaderSelect: function (oEvent) {
-			const oSelctedKey = oEvent.getParameter('key');
-			this.getModel('worklistView').setProperty('/sITBKey', oSelctedKey);
-			this._bindTable();
-		},
-		onApplyFilter: function() {
-            var oCombinedFilter = new Filter({
-                filters: [new Filter("Version", FilterOperator.EQ, "D"), new Filter("Description", FilterOperator.EQ, "333")],
-                and: true
-            });
-
-            var oTable = this.byId("table");
-            var oBinding = oTable.getBinding("items");
-            oBinding.filter([oCombinedFilter]);
-
-            this._getTotalItems();
-        },
-		onApplyPartialFilter: function() {
-            var oCombinedFilter = new Filter({
-                filters: [new Filter("Version", FilterOperator.EQ, "D"), new Filter("Description", FilterOperator.EQ, "333")],
-                and: false
-            });
-
-            var oTable = this.byId("table");
-            var oBinding = oTable.getBinding("items");
-            oBinding.filter([oCombinedFilter]);
-
-            this._getTotalItems();
-        },
-        onClear: function() {
-            var oTable = this.byId("table");
-            var oBinding = oTable.getBinding("items");
-            oBinding.filter([]);
-			oBinding.sort(null)
-            this._getTotalItems();
-        },
-
-        onApplySort: function() {
-            var oSorter1 = new Sorter("RegionText", false);
-            var oSorter2 = new Sorter("DocumentNumber", true);
-
-            var oTable = this.byId("table");
-            var oBinding = oTable.getBinding("items");
-            oBinding.sort([oSorter1, oSorter2]);
-
-            this._getTotalItems();
-        },
-
-	});
-});
+		});
+	}
+);

@@ -1,7 +1,7 @@
 /*global QUnit*/
 
 sap.ui.define([
-		"zjblessons/Lesson14/model/formatter"
+		"zjblessons/Lesson18/model/formatter"
 	], function (formatter) {
 		"use strict";
 

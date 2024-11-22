@@ -1,6 +1,6 @@
 sap.ui.define([
 		"sap/ui/test/Opa5",
-		"zjblessons/Lesson14/test/integration/pages/Common"
+		"zjblessons/Lesson18/test/integration/pages/Common"
 	], function(Opa5, Common) {
 		"use strict";
 
@@ -40,7 +40,7 @@ sap.ui.define([
 						return this.waitFor({
 							success : function () {
 								var sObjectId = this.getContext().currentItem.id;
-								Opa5.getHashChanger().setHash("/zjblessons_base_Headers/" + sObjectId);
+								Opa5.getHashChanger().setHash("/zjblessons_base_Items/" + sObjectId);
 							}
 						});
 					},
@@ -56,7 +56,7 @@ sap.ui.define([
 
 						return this.waitFor({
 							success : function() {
-								oOptions.hash = "/zjblessons_base_Headers/" + encodeURIComponent(sObjectId);
+								oOptions.hash = "/zjblessons_base_Items/" + encodeURIComponent(sObjectId);
 								this.iStartMyApp(oOptions);
 							}
 						});

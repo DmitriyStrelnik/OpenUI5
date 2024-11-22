@@ -1,56 +1,115 @@
-<mvc:View controllerName="zjblessons.Lesson14.controller.Worklist" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
-	xmlns:dnd="sap.ui.core.dnd" xmlns:controls="zjblessons.Lesson14.controller.controls">
+<mvc:View controllerName="zjblessons.Lesson18.controller.Worklist" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:f="sap.f" xmlns:table="sap.ui.table" xmlns:s006="jblibs.s006" xmlns:s000="jblibs.s000">
 
+	<f:DynamicPage id="dynamicPage" fitContent="true">
+		<f:header>
+			<f:DynamicPageHeader pinnable="false">
+				<s006:FilterBar id="filterBar" 
+    				URLAlias="AdminLogs" firstLine="HeaderID,Created" 
+    				URLfilter="true" liveMode="true" btnShowHide="true" btnShowHidePressed="true"
+    				entityData="zjblessons_base_Items"
+    				 ParametersModel="annotation" change="onPressFilterBarChange" labelPlacement="placeholder" alignControls="Start" btnMode="standard" secondaryControlID="btnTable" tableID="table"
+					 visibleVM = "false">
+					<s006:rightToolbar>
+						<s006:BtnTableSettings id="btnTable" URLAlias="AdminLogs" URLfilter="true" VMID="" icon="{i18n>iBtnSettings}" type="Transparent"
+					change="prepareSelect" tableID="table" ParametersModel="annotation" widthColumns="15rem"/>
+						<Button type="Transparent" icon="{i18n>iBtnRefresh}" press="onPressRefresh"/>
+					</s006:rightToolbar>
+				</s006:FilterBar>
+			</f:DynamicPageHeader>
+		</f:header>
 
-	<Page>
-		<controls:CustomATHBox src="src/chibi-pochita-logo.png" initials="ABC"  textAlign="Center" width="70px" backgroundColor="TileIcon" displayShape="Square"
-				displaySize="XL" text="User Nickname" maxLines="2" />
-		<Table id="table" width="auto" noDataText="{worklistView>/tableNoDataText}" itemPress="onItemSelect"
-			busyIndicatorDelay="{worklistView>/tableBusyDelay}">
-			<dragDropConfig>
-				<dnd:DragDropInfo sourceAggregation="items" targetAggregation="items" dropPosition="Between"
-					drop="onDrop" />
-			</dragDropConfig>
-			<headerToolbar>
-				<Toolbar>
-					<Title id="tableHeader" text="{= ${worklistView>/sTotal}} entries in the table" />
-					<ToolbarSpacer />
-					<Button text="{i18n>UseFilter}" press="onApplyFilter" />
-					<Button text="{i18n>UsePartialFilter}" press="onApplyPartialFilter" />
-					<Button text="{i18n>Sort}" press="onApplySort" />
-					<Button text="{i18n>Clear}" press="onClear" />
-					<Button icon="{i18n>refreshIcon}" press="onRefresh" />
-				</Toolbar>
-			</headerToolbar>
+		<f:content>
+			<NavContainer height="100%" width="100%">
+				<table:Table id="table" visibleRowCountMode="Auto" minAutoRowCount="1" enableBusyIndicator="true" busyIndicatorDelay="0" threshold="160" selectionMode="None"
+					selectionBehavior="Row" >
+					<table:columns>
+						<table:Column id="HeaderID" sortProperty="HeaderID" width="18rem">
+							<Label text="{i18n>HeaderID}"/>
+							<table:template>
+								<HBox alignItems="Center">
+									<Text text="{HeaderID}"/>
+								</HBox>
+							</table:template>
+						</table:Column>
+						<table:Column id="MaterialID" sortProperty="MaterialID" width="12rem">
+							<Label text="{i18n>MaterialID}"/>
+							<table:template>
+								<HBox alignItems="Center">
+									<Text text="{MaterialID}"/>
+								</HBox>
+							</table:template>
+						</table:Column>
+						<table:Column id="GroupID" sortProperty="GroupID" width="20rem">
+							<Label text="{i18n>GroupID}"/>
+							<table:template>
+								<HBox alignItems="Center">
+									<Text text="{GroupID}"/>
+								</HBox>
+							</table:template>
+						</table:Column>
+						<table:Column id="SubGroupID" sortProperty="SubGroupID" width="20rem">
+							<Label text="{i18n>SubGroupID}"/>
+							<table:template>
+								<HBox alignItems="Center">
+									<Text text="{SubGroupID}"/>
+								</HBox>
+							</table:template>
+						</table:Column>
+						<table:Column id="Quantity" sortProperty="Quantity" width="20rem">
+							<Label text="{i18n>Quantity}"/>
+							<table:template>
+								<HBox alignItems="Center">
+									<Text text="{Quantity}"/>
+								</HBox>
+							</table:template>
+						</table:Column>
+						<table:Column id="Price" sortProperty="Price" width="20rem">
+							<Label text="{i18n>Price}"/>
+							<table:template>
+								<HBox alignItems="Center">
+									<Text text="{Price}"/>
+								</HBox>
+							</table:template>
+						</table:Column>
+						<table:Column id="Created" sortProperty="Created" width="20rem">
+							<Label text="{i18n>Created}"/>
+							<table:template>
+								<HBox alignItems="Center">
+									<Text text="{Created}"/>
+								</HBox>
+							</table:template>
+						</table:Column>
+						<table:Column id="CreatedBy" sortProperty="CreatedBy" width="20rem">
+							<Label text="{i18n>CreatedBy}"/>
+							<table:template>
+								<HBox alignItems="Center">
+								<s000:AvatarAndLink text="{CreatedByFullName}" clickable="text" imageURL="{CreatedByAvatar}" size="XXS"/>
+								</HBox>
+							</table:template>
+						</table:Column>
+						<table:Column id="Modified" sortProperty="Modified" width="20rem">
+							<Label text="{i18n>Modified}"/>
+							<table:template>
+								<HBox alignItems="Center">
+									<Text text="{Modified}"/>
+								</HBox>
+							</table:template>
+						</table:Column>
+						<table:Column id="ModifiedBy" sortProperty="ModifiedBy" width="20rem">
+							<Label text="{i18n>ModifiedBy}"/>
+							<table:template>
+								<HBox alignItems="Center">
+									<s000:AvatarAndLink text="{ModifiedByFullName}" clickable="text" imageURL="{ModifiedByAvatar}" size="XXS"/>
+									<!-- For test Avatar you can use 'https://i.imgur.com/CzXTtJV.jpg'  -->
+								</HBox>
+							</table:template>
+						</table:Column>
+					</table:columns>
+				</table:Table>
+			</NavContainer>
+		</f:content>
 
-			<columns>
-				<Column id="order">
-					<Text text="{i18n>OrderTitle}" id="orderTitle" />
-				</Column>
-				<Column id="nameColumn">
-					<Text text="{i18n>tableNameColumnTitle}" id="nameColumnTitle" />
-				</Column>
-				<Column id="documentDateColumn">
-					<Text text="{i18n>tableDocumentDateColumnTitle}" id="documentDateColumnTitle" />
-				</Column>
-				<Column id="plantTextColumn">
-					<Text text="{i18n>tablePlantTextColumnTitle}" id="plantTextColumnTitle" />
-				</Column>
-				<Column id="regionTextColumn">
-					<Text text="{i18n>tableRegionTextColumnTitle}" id="regionTextColumnTitle" />
-				</Column>
-				<Column id="descriptionColumn">
-					<Text text="{i18n>tableDescriptionColumnTitle}" id="descriptionColumnTitle" />
-				</Column>
-				<Column id="createdColumn">
-					<Text text="{i18n>tableCreatedColumnTitle}" id="createdColumnTitle" />
-				</Column>
-				<Column width="5%" />
-			</columns>
-
-
-		</Table>
-	</Page>
-
+	</f:DynamicPage>
 
 </mvc:View>

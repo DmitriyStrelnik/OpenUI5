@@ -1,7 +1,7 @@
 /*global QUnit*/
 
 sap.ui.define([
-		"zjblessons/Lesson14/model/models",
+		"zjblessons/Lesson18/model/models",
 		"sap/ui/thirdparty/sinon",
 		"sap/ui/thirdparty/sinon-qunit"
 	], function (models) {

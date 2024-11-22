@@ -5,8 +5,8 @@ sap.ui.define([
 		"sap/ui/test/matchers/AggregationLengthEquals",
 		"sap/ui/test/matchers/AggregationFilled",
 		"sap/ui/test/matchers/PropertyStrictEquals",
-		"zjblessons/Lesson14/test/integration/pages/Common",
-		"zjblessons/Lesson14/test/integration/pages/shareOptions"
+		"zjblessons/Lesson18/test/integration/pages/Common",
+		"zjblessons/Lesson18/test/integration/pages/shareOptions"
 	], function(Opa5, Press, EnterText,AggregationLengthEquals, AggregationFilled, PropertyStrictEquals, Common, shareOptions) {
 		"use strict";
 
@@ -65,8 +65,8 @@ sap.ui.define([
 								// Don't remember objects just strings since IE will not allow accessing objects of destroyed frames
 								this.getContext().currentItem = {
 									bindingPath: oBindingContext.getPath(),
-									id: oBindingContext.getProperty("HeaderID"),
-									name: oBindingContext.getProperty("Description")
+									id: oBindingContext.getProperty("ItemID"),
+									name: oBindingContext.getProperty("MaterialText")
 								};
 							}
 						}));
@@ -213,9 +213,9 @@ sap.ui.define([
 						var aAllEntities,
 							iExpectedNumberOfItems;
 
-						// retrieve all zjblessons_base_Headers to be able to check for the total amount
+						// retrieve all zjblessons_base_Items to be able to check for the total amount
 						this.waitFor(this.createAWaitForAnEntitySet({
-							entitySet: "zjblessons_base_Headers",
+							entitySet: "zjblessons_base_Items",
 							success: function (aEntityData) {
 								aAllEntities = aEntityData;
 							}

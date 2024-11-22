@@ -2,8 +2,8 @@ sap.ui.define([
 		"sap/ui/test/Opa5",
 		"sap/ui/test/actions/Press",
 		"sap/ui/test/matchers/PropertyStrictEquals",
-		"zjblessons/Lesson14/test/integration/pages/Common",
-		"zjblessons/Lesson14/test/integration/pages/shareOptions"
+		"zjblessons/Lesson18/test/integration/pages/Common",
+		"zjblessons/Lesson18/test/integration/pages/shareOptions"
 	], function(Opa5, Press, PropertyStrictEquals, Common, shareOptions) {
 		"use strict";
 
